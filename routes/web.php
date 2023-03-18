@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\MasterPasienController;
+use App\Http\Controllers\PasienDirawatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('produk', ProdukController::class);
 
     Route::get('master/pasien/data', [MasterPasienController::class, 'data'])->name('pasien.data');
-    Route::post('master/pasien/cetak-barcode', [MasterPasienController::class, 'cetakBarcode'])->name('pasien.cetak_barcode');
+    Route::get('master/pasien/cetak-barcode/{mrn}', [MasterPasienController::class, 'cetakBarcode'])->name('pasien.cetak_barcode');
     Route::resource('master/pasien', MasterPasienController::class);
 
     Route::get('master/dokter/data', [DokterController::class, 'data'])->name('dokter.data');
@@ -57,4 +58,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('master/bed/data', [BedController::class, 'data'])->name('bed.data');
     Route::resource('master/bed', BedController::class);
+
+    Route::post('bedmanagement/pasiendirawat/data', [PasienDirawatController::class, 'data'])->name('pasiendirawat.data');
+    Route::put('bedmanagement/registrasirwi/{id}', [PasienDirawatController::class, 'registrasi'])->name('pasiendirawat.registrasi');
+    Route::put('bedmanagement/pindahkamar/{id}', [PasienDirawatController::class, 'pindah'])->name('pasiendirawat.pindah');
+    Route::post('bedmanagement/pasienpulang/{id}', [PasienDirawatController::class, 'pulang'])->name('pasiendirawat.pulang');
+    Route::resource('bedmanagement/pasiendirawat', PasienDirawatController::class);
 });
