@@ -517,6 +517,7 @@
                     $('#modal-form #alamat').val(response.bed_ruangan.data_pasien.alamat).prop("disabled", true);
                     $('#modal-form #agama').val(response.bed_ruangan.data_pasien.agama).prop("disabled", true);
 
+                    $('#modal-form #no_registrasi').val(response.no_registrasi).prop("readonly", true);
                     $('#modal-form #no_kamar').val(response.bed_ruangan.no_kamar).prop("disabled", false).prop(
                         "readonly", true);
                     $('#modal-form #diagnosa').val(response.bed_ruangan.diagnosa);
@@ -667,6 +668,7 @@
 
             $('#kamar_baru').html('');
             $('#modal-form #no_kamar').val(null).prop("disabled", false).prop("readonly", false);
+            $('#modal-form #no_registrasi').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form #diagnosa').val(null).prop("disabled", false).prop("readonly", false);
             $('#modal-form [name=id_dokter]').val(null).prop("disabled", false).prop("readonly", false).trigger('change');
             $('#JKN').prop("disabled", false).prop("readonly", false).prop("checked", false).trigger('change');

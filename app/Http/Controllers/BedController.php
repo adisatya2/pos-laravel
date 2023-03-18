@@ -119,6 +119,8 @@ class BedController extends Controller
         $kamar = Bed::findOrFail($id);
 
         $request['no_kamar'] = Str::upper($request['no_kamar']);
+        $request['flagbor'] = !$request['flagbor'] ? 0 :  1;
+        $request['flagsetting'] = !$request['flagsetting'] ? 0 :  1;
         $request['aktif'] = !$request['aktif'] ? 0 :  1;
 
         $kamar->update($request->all());
