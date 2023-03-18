@@ -244,22 +244,6 @@ class PasienDirawatController extends Controller
     {
         $noregistrasi = 'IP' . date("YmdHis") . rand(1, 99);
 
-        $pasien = MasterPasien::updateOrCreate(
-            [
-                'mrn' => $request['mrn']
-            ],
-            [
-                'nik' => $request['nik'],
-                'nama_pasien' => $request['nama_pasien'],
-                'tempat_lahir' => $request['tempat_lahir'],
-                'tanggal_lahir' => $request['tanggal_lahir'],
-                'jk' => $request['jk'],
-                'no_telp' => $request['no_telp'],
-                'alamat' => $request['alamat'],
-                'agama' => $request['agama'],
-            ]
-        );
-
         $cek = Bed::where('mrn', '=', $request['mrn'])->first();
 
         if ($cek) {
@@ -281,7 +265,21 @@ class PasienDirawatController extends Controller
             $kamar->keterangan_perawat = $request['keterangan_perawat'];
             $kamar->user_input = auth()->user()->nrp;
 
-            $kamar->save();
+            $pasien = MasterPasien::updateOrCreate(
+                [
+                    'mrn' => $request['mrn']
+                ],
+                [
+                    'nik' => $request['nik'],
+                    'nama_pasien' => $request['nama_pasien'],
+                    'tempat_lahir' => $request['tempat_lahir'],
+                    'tanggal_lahir' => $request['tanggal_lahir'],
+                    'jk' => $request['jk'],
+                    'no_telp' => $request['no_telp'],
+                    'alamat' => $request['alamat'],
+                    'agama' => $request['agama'],
+                ]
+            );
 
             $registrasi = Registrasirwi::create([
                 'no_registrasi' => $noregistrasi,
@@ -293,6 +291,8 @@ class PasienDirawatController extends Controller
                 'nama_jaminan' => $request['nama_jaminan'],
                 'user' => auth()->user()->nrp,
             ]);
+
+            $kamar->save();
 
             return response()->json(['pesan' => 'Data pasien berhasil disimpan'], 200);
         }
@@ -363,6 +363,7 @@ class PasienDirawatController extends Controller
             $kamar_lama->hak_pasien = null;
             $kamar_lama->bed_hinai = null;
             $kamar_lama->tanggal_masuk = null;
+            $kamar_lama->tanggal_pindah = null;
             $kamar_lama->user_input = null;
             $kamar_lama->user_pindah = null;
 

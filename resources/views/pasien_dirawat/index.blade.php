@@ -205,9 +205,8 @@
                 }
             });
 
-            $('#modal-form').validator().on('submit', function(e) {
-                var no_kamar = $('#modal-form [name=no_kamar]').val();
-                var nama_pasien = $('#modal-form [name=nama_pasien]').val();
+            $('#modal-form').on('submit', function(e) {
+
                 if (!e.preventDefault()) {
                     $.post($('#modal-form form').attr('action'), $('#modal-form form')
                             .serialize())
@@ -220,8 +219,6 @@
                                 autohide: true,
                                 delay: 3000,
                                 class: 'bg-success',
-                                // body: 'Pasien ' + nama_pasien +
-                                //     ' berhasil diregistrasi di kamar ' + no_kamar + '.'
                                 body: response.pesan
                             });
 
@@ -387,11 +384,24 @@
             $('#modal-form form')[0].reset();
             $('#modal-form form').attr('action', url);
             $('#modal-form [name=_method]').val('put');
-            $('#modal-form [name=no_kamar]').val(no_kamar);
+            $('#modal-form [name=no_kamar]').val(no_kamar).prop("disabled", true).prop("required", true);
+            $('#modal-form [name=no_registrasi]').prop("disabled", true);
             $('#lama').text("");
             $('#modal-form').on('shown.bs.modal', function() {
                 $(this).find('[autofocus]').focus();
             })
+
+            $('#modal-form #mrn').prop("required", true);
+            $('#modal-form #nama_pasien').prop("required", true);
+            $('#modal-form #tanggal_lahir').prop("required", true);
+            $('#modal-form [name=jk]').prop("required", true);
+
+            $('#modal-form #diagnosa').prop("required", true);
+            $('#modal-form #id_dokter').prop("required", true);
+            $('#modal-form [name=jenis_jaminan]').prop("required", true);
+            $('#modal-form [name=nama_jaminan]').prop("required", true);
+            $('#modal-form [name=hak_pasien]').prop("required", true);
+            $('#modal-form [name=tanggal_masuk]').prop("required", true);
         }
 
         function editForm(url) {
@@ -653,6 +663,8 @@
         function resetForm() {
             $('#modal-form .modal-title').text('');
 
+            $('#notifikasi').html('');
+            $('#error-info').removeClass('text-danger').removeClass('text-success');
             $('#modal-form #mrn').prop("disabled", false).prop("readonly", false);
             $('#modal-form #nama_pasien').prop("disabled", false).prop("readonly", false);
             $('#modal-form #nik').prop("disabled", false).prop("readonly", false);
